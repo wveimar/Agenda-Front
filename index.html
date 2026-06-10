@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soluciones Musicales | Eventos Públicos</title>
+  <meta name="description"
+    content="Agenda pública de eventos y servicios musicales de Soluciones Musicales Oriente Antioquia." />
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ============ RESET Y BASE ============ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0f0f1e;
+      --bg-secondary: #1a1a2e;
+      --bg-card: #252540;
+      --accent: #f5b942;
+      --accent-hover: #ffc95c;
+      --text-primary: #ffffff;
+      --text-secondary: #b8b8d1;
+      --text-muted: #7a7a95;
+      --border: rgba(245, 185, 66, 0.2);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --gradient: linear-gradient(135deg, #f5b942 0%, #ff6b6b 100%);
+      --status-upcoming: #4ade80;
+      --status-past: #94a3b8;
+      --status-tbd: #fbbf24;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(245, 185, 66, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(255, 107, 107, 0.08) 0%, transparent 40%);
+    }
+
+    /* ============ HEADER / HERO ============ */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+      position: relative;
+    }
+
+    .hero .logo-icon {
+      font-size: 3.5rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero h1 span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ============ CONTROLES ============ */
+    .controls {
+      max-width: 1200px;
+      margin: 0 auto 30px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 18px 14px 48px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(245, 185, 66, 0.15);
+    }
+
+    .event-count {
+      background: var(--bg-card);
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    /* ============ TOGGLES (VISTAS Y ESTADOS) ============ */
+    .toggle-group {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      padding: 4px;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+
+    .toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 10px 16px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .toggle-btn:hover {
+      color: var(--text-primary);
+      background: rgba(245, 185, 66, 0.08);
+    }
+
+    .toggle-btn.active {
+      background: var(--gradient);
+      color: var(--bg-primary);
+      font-weight: 600;
+    }
+
+    .toggle-btn i {
+      font-size: 1rem;
+    }
+
+    .toggle-btn .count-pill {
+      background: rgba(0, 0, 0, 0.25);
+      color: inherit;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+      min-width: 22px;
+      text-align: center;
+    }
+
+    .toggle-btn:not(.active) .count-pill {
+      background: rgba(245, 185, 66, 0.15);
+      color: var(--accent);
+    }
+
+    /* ============ CONTENEDOR ============ */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    /* ============ VISTA: TARJETAS ============ */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .event-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.35s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      animation: fadeInUp 0.5s ease backwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .event-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow), 0 0 30px rgba(245, 185, 66, 0.15);
+    }
+
+    .event-card.past {
+      opacity: 0.75;
+    }
+
+    .event-card.past:hover {
+      opacity: 1;
+    }
+
+    .card-header {
+      padding: 24px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient);
+    }
+
+    .event-card.past .card-header::before {
+      background: linear-gradient(135deg, var(--status-past) 0%, #64748b 100%);
+    }
+
+    .card-header-left {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .event-type {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .event-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text-primary);
+    }
+
+    /* ============ BADGES DE ESTADO ============ */
+    .status-badge {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      white-space: nowrap;
+    }
+
+    .status-badge.upcoming {
+      background: rgba(74, 222, 128, 0.15);
+      color: var(--status-upcoming);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+    }
+
+    .status-badge.past {
+      background: rgba(148, 163, 184, 0.15);
+      color: var(--status-past);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .status-badge.tbd {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--status-tbd);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .card-body {
+      padding: 20px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .info-icon {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      background: rgba(245, 185, 66, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1rem;
+    }
+
+    .info-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .info-value.empty {
+      color: var(--text-muted);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* ============ VISTA: TABLA ============ */
+    .table-container {
+      background: var(--bg-card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      animation: fadeInUp 0.5s ease;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .events-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    .events-table thead {
+      background: linear-gradient(135deg, rgba(245, 185, 66, 0.12), rgba(255, 107, 107, 0.08));
+    }
+
+    .events-table th {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--accent);
+      border-bottom: 1px solid var(--border);
+      user-select: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .events-table th:hover {
+      background: rgba(245, 185, 66, 0.08);
+    }
+
+    .events-table th .sort-icon {
+      margin-left: 6px;
+      opacity: 0.4;
+      font-size: 0.75rem;
+    }
+
+    .events-table th.sorted .sort-icon {
+      opacity: 1;
+      color: var(--accent-hover);
+    }
+
+    .events-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+
+    .events-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .events-table tbody tr:hover {
+      background: rgba(245, 185, 66, 0.05);
+    }
+
+    .events-table tbody tr.past-row {
+      opacity: 0.7;
+    }
+
+    .events-table tbody tr.past-row:hover {
+      opacity: 1;
+    }
+
+    .events-table td {
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    .table-type {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(245, 185, 66, 0.15);
+      color: var(--accent);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .table-empty {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ============ VISTA: LISTA ============ */
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .list-item {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: all 0.25s;
+      animation: fadeInUp 0.4s ease backwards;
+    }
+
+    .list-item:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+      box-shadow: 0 4px 20px rgba(245, 185, 66, 0.1);
+    }
+
+    .list-item.past {
+      opacity: 0.7;
+    }
+
+    .list-item.past:hover {
+      opacity: 1;
+    }
+
+    .list-date-badge {
+      flex-shrink: 0;
+      width: 70px;
+      height: 70px;
+      background: var(--gradient);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-primary);
+      font-weight: 700;
+      position: relative;
+    }
+
+    .list-date-badge .day {
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    .list-date-badge .month {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    .list-date-badge.na {
+      background: var(--bg-secondary);
+      color: var(--text-muted);
+    }
+
+    .list-date-badge.past {
+      background: linear-gradient(135deg, var(--status-past) 0%, #64748b 100%);
+    }
+
+    .list-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .list-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .list-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .list-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .list-meta i {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    /* ============ VISTA: TIMELINE ============ */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent) 0%, rgba(255, 107, 107, 0.3) 100%);
+    }
+
+    .timeline-group {
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .timeline-date-header {
+      position: relative;
+      margin-bottom: 16px;
+      padding-left: 30px;
+      margin-left: -40px;
+    }
+
+    .timeline-date-header::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--gradient);
+      box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 5px var(--accent);
+    }
+
+    .timeline-date-header.past::before {
+      background: linear-gradient(135deg, var(--status-past) 0%, #64748b 100%);
+      box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 5px var(--status-past);
+    }
+
+    .timeline-date-text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .timeline-date-header.past .timeline-date-text {
+      color: var(--status-past);
+    }
+
+    .timeline-date-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .timeline-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .timeline-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 18px 20px;
+      transition: all 0.25s;
+      animation: fadeInUp 0.4s ease backwards;
+    }
+
+    .timeline-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(245, 185, 66, 0.12);
+    }
+
+    .timeline-card.past {
+      opacity: 0.75;
+    }
+
+    .timeline-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .timeline-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .timeline-card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .timeline-card-meta i {
+      color: var(--accent);
+    }
+
+    /* ============ ESTADOS ============ */
+    .status-container {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 4px solid var(--bg-card);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .status-icon {
+      font-size: 4rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .status-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-text {
+      color: var(--text-secondary);
+    }
+
+    .retry-btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      background: var(--gradient);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .retry-btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 700px) {
+      .toggle-btn .btn-text {
+        display: none;
+      }
+
+      .toggle-btn {
+        padding: 10px 14px;
+      }
+
+      .list-date-badge {
+        width: 60px;
+        height: 60px;
+      }
+
+      .list-date-badge .day {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 50px 20px 40px;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .controls-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .event-count {
+        text-align: center;
+      }
+
+      .timeline {
+        padding-left: 30px;
+      }
+
+      .timeline-date-header {
+        margin-left: -30px;
+        padding-left: 24px;
+      }
+
+      .timeline::before {
+        left: 10px;
+      }
+
+      .timeline-date-header::before {
+        left: 3px;
+      }
+
+      .card-header {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="logo-icon"><i class="fa-solid fa-guitar"></i></div>
+    <h1>Soluciones <span>Musicales</span></h1>
+    <p>Agenda pública de eventos y presentaciones en vivo</p>
+  </header>
+
+  <!-- CONTROLES -->
+  <div class="controls">
+    <!-- Fila 1: Búsqueda + contador -->
+    <div class="controls-row">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Buscar por tipo, lugar, responsable..." />
+      </div>
+      <div class="event-count" id="eventCount">Cargando...</div>
+    </div>
+
+    <!-- Fila 2: Filtro de estado -->
+    <div class="controls-row">
+      <div class="toggle-group" id="statusToggle">
+        <button class="toggle-btn active" data-status="all" title="Todos los eventos">
+          <i class="fa-solid fa-layer-group"></i>
+          <span class="btn-text">Todos</span>
+          <span class="count-pill" id="countAll">0</span>
+        </button>
+        <button class="toggle-btn" data-status="upcoming" title="Eventos próximos">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span class="btn-text">Próximos</span>
+          <span class="count-pill" id="countUpcoming">0</span>
+        </button>
+        <button class="toggle-btn" data-status="past" title="Eventos realizados">
+          <i class="fa-solid fa-circle-check"></i>
+          <span class="btn-text">Realizados</span>
+          <span class="count-pill" id="countPast">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Fila 3: Selector de vistas -->
+    <div class="controls-row">
+      <div class="toggle-group" id="viewToggle">
+        <button class="toggle-btn active" data-view="cards" title="Tarjetas">
+          <i class="fa-solid fa-grip"></i><span class="btn-text">Tarjetas</span>
+        </button>
+        <button class="toggle-btn" data-view="table" title="Tabla">
+          <i class="fa-solid fa-table-list"></i><span class="btn-text">Tabla</span>
+        </button>
+        <button class="toggle-btn" data-view="list" title="Lista">
+          <i class="fa-solid fa-list"></i><span class="btn-text">Lista</span>
+        </button>
+        <button class="toggle-btn" data-view="timeline" title="Timeline">
+          <i class="fa-solid fa-timeline"></i><span class="btn-text">Timeline</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container">
+    <div id="content">
+      <div class="status-container">
+        <div class="loader"></div>
+        <h2 class="status-title">Cargando eventos...</h2>
+        <p class="status-text">Consultando la agenda en curso</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Soluciones Musicales · Hecho con <i class="fa-solid fa-heart" style="color: var(--accent);"></i> para
+      la
+      música</p>
+  </footer>
+
+  <script>
+    const API_URL = "https://soluciones-musicales-api.solucionesmusicalesorienteant.workers.dev/";
+    let allEvents = [];
+    let currentView = localStorage.getItem('sm-view') || 'cards';
+    let currentStatus = localStorage.getItem('sm-status') || 'all';
+    let sortConfig = { column: 'fecha', direction: 'asc' };
+
+    const contentEl = document.getElementById('content');
+    const countEl = document.getElementById('eventCount');
+    const searchEl = document.getElementById('searchInput');
+    const viewToggleEl = document.getElementById('viewToggle');
+    const statusToggleEl = document.getElementById('statusToggle');
+
+    // ============ INICIALIZACIÓN ============
+    function initActiveStates() {
+      document.querySelectorAll('#viewToggle .toggle-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === currentView);
+      });
+      document.querySelectorAll('#statusToggle .toggle-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.status === currentStatus);
+      });
+    }
+
+    // ============ CARGAR DATOS ============
+    async function fetchEvents() {
+      contentEl.innerHTML = `
+        <div class="status-container">
+          <div class="loader"></div>
+          <h2 class="status-title">Cargando eventos...</h2>
+          <p class="status-text">Consultando la agenda en curso</p>
+        </div>`;
+
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+        const data = await res.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          showEmpty();
+          return;
+        }
+
+        allEvents = data;
+        updateStatusCounts();
+        renderCurrentView();
+      } catch (err) {
+        console.error(err);
+        showError(err.message);
+      }
+    }
+
+    // ============ DETERMINAR ESTADO DEL EVENTO ============
+    function getEventStatus(ev) {
+      // Si no tiene fecha válida → "tbd" (por definir)
+      if (!hasValue(ev.fecha)) return 'tbd';
+
+      const eventDate = parseToDate(ev.fecha);
+      if (!eventDate || isNaN(eventDate.getTime())) return 'tbd';
+
+      // Si tiene hora, combinarla
+      if (hasValue(ev.hora)) {
+        const timeMatch = String(ev.hora).match(/(\d{1,2}):(\d{2})/);
+        if (timeMatch) {
+          eventDate.setHours(parseInt(timeMatch[1], 10), parseInt(timeMatch[2], 10), 0, 0);
+        }
+      } else {
+        // Si no tiene hora, asumir fin del día para considerar "próximo" todo el día
+        eventDate.setHours(23, 59, 59, 999);
+      }
+
+      const now = new Date();
+      return eventDate.getTime() >= now.getTime() ? 'upcoming' : 'past';
+    }
+
+    // ============ CONTADORES POR ESTADO ============
+    function updateStatusCounts() {
+      let all = 0, upcoming = 0, past = 0;
+      allEvents.forEach(ev => {
+        all++;
+        const s = getEventStatus(ev);
+        if (s === 'upcoming') upcoming++;
+        else if (s === 'past') past++;
+        // 'tbd' se cuenta en 'all' pero no en los otros dos
+      });
+      document.getElementById('countAll').textContent = all;
+      document.getElementById('countUpcoming').textContent = upcoming;
+      document.getElementById('countPast').textContent = past;
+    }
+
+    // ============ FILTRADO COMBINADO ============
+    function getFilteredEvents() {
+      let events = allEvents;
+
+      // Filtro por búsqueda
+      const q = searchEl.value.toLowerCase().trim();
+      if (q) {
+        events = events.filter(ev =>
+          [ev.tipo, ev.lugar, ev.responsable, ev.fecha, ev.hora]
+            .some(v => v && String(v).toLowerCase().includes(q))
+        );
+      }
+
+      // Filtro por estado
+      if (currentStatus === 'upcoming') {
+        events = events.filter(ev => getEventStatus(ev) === 'upcoming');
+      } else if (currentStatus === 'past') {
+        events = events.filter(ev => getEventStatus(ev) === 'past');
+      }
+      // 'all' no filtra
+
+      return events;
+    }
+
+    function updateCount(num) {
+      const q = searchEl.value.trim();
+      if (q) {
+        countEl.textContent = `${num} resultado${num !== 1 ? 's' : ''}`;
+      } else {
+        countEl.textContent = `${num} evento${num !== 1 ? 's' : ''}`;
+      }
+    }
+
+    // ============ RENDERIZADO ============
+    function renderCurrentView() {
+      const events = getFilteredEvents();
+      updateCount(events.length);
+
+      if (events.length === 0) {
+        renderEmptyState();
+        return;
+      }
+
+      switch (currentView) {
+        case 'table': renderTableView(events); break;
+        case 'list': renderListView(events); break;
+        case 'timeline': renderTimelineView(events); break;
+        case 'cards':
+        default: renderCardView(events); break;
+      }
+    }
+
+    // ============ BADGE DE ESTADO ============
+    function statusBadge(ev) {
+      const s = getEventStatus(ev);
+      if (s === 'upcoming') {
+        return `<span class="status-badge upcoming" title="Evento próximo"><i class="fa-solid fa-clock"></i> Próximo</span>`;
+      } else if (s === 'past') {
+        return `<span class="status-badge past" title="Evento realizado"><i class="fa-solid fa-check"></i> Realizado</span>`;
+      } else {
+        return `<span class="status-badge tbd" title="Fecha por definir"><i class="fa-solid fa-question"></i> Por definir</span>`;
+      }
+    }
+
+    // ============ VISTA: TARJETAS ============
+    function renderCardView(events) {
+      const html = `<div class="events-grid">
+        ${events.map((e, i) => {
+        const s = getEventStatus(e);
+        return `
+          <article class="event-card ${s === 'past' ? 'past' : ''}" style="animation-delay: ${i * 0.05}s">
+            <div class="card-header">
+              <div class="card-header-left">
+                <span class="event-type">${escapeHtml(e.tipo) || 'Evento'}</span>
+                <h3 class="event-title">${escapeHtml(e.tipo) || 'Sin título'}</h3>
+              </div>
+              ${statusBadge(e)}
+            </div>
+            <div class="card-body">
+              ${infoRow('fa-calendar-days', 'Fecha', e.fecha)}
+              ${infoRow('fa-clock', 'Hora', e.hora)}
+              ${infoRow('fa-location-dot', 'Lugar', e.lugar)}
+              ${infoRow('fa-user-tie', 'Responsable', e.responsable)}
+            </div>
+          </article>`;
+      }).join('')}
+      </div>`;
+      contentEl.innerHTML = html;
+    }
+
+    function infoRow(icon, label, value) {
+      const hasVal = value && String(value).trim() && value !== 'Por definir';
+      return `
+        <div class="info-row">
+          <div class="info-icon"><i class="fa-solid ${icon}"></i></div>
+          <div class="info-content">
+            <div class="info-label">${label}</div>
+            <div class="info-value ${hasVal ? '' : 'empty'}">
+              ${hasVal ? escapeHtml(value) : 'Por definir'}
+            </div>
+          </div>
+        </div>`;
+    }
+
+    // ============ VISTA: TABLA ============
+    function renderTableView(events) {
+      const sorted = [...events].sort((a, b) => {
+        const col = sortConfig.column;
+        const va = String(a[col] || '').toLowerCase();
+        const vb = String(b[col] || '').toLowerCase();
+        const cmp = va.localeCompare(vb);
+        return sortConfig.direction === 'asc' ? cmp : -cmp;
+      });
+
+      const icon = (col) => {
+        const active = sortConfig.column === col;
+        const dir = active ? (sortConfig.direction === 'asc' ? 'fa-sort-up' : 'fa-sort-down') : 'fa-sort';
+        return `<i class="fa-solid ${dir} sort-icon"></i>`;
+      };
+      const cls = (col) => sortConfig.column === col ? 'sorted' : '';
+
+      const html = `
+        <div class="table-container">
+          <div class="table-wrapper">
+            <table class="events-table">
+              <thead>
+                <tr>
+                  <th>Estado</th>
+                  <th class="${cls('tipo')}" data-sort="tipo">Tipo ${icon('tipo')}</th>
+                  <th class="${cls('fecha')}" data-sort="fecha">Fecha ${icon('fecha')}</th>
+                  <th class="${cls('hora')}" data-sort="hora">Hora ${icon('hora')}</th>
+                  <th class="${cls('lugar')}" data-sort="lugar">Lugar ${icon('lugar')}</th>
+                  <th class="${cls('responsable')}" data-sort="responsable">Responsable ${icon('responsable')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${sorted.map(e => {
+        const s = getEventStatus(e);
+        return `
+                  <tr class="${s === 'past' ? 'past-row' : ''}">
+                    <td>${statusBadge(e)}</td>
+                    <td><span class="table-type">${escapeHtml(e.tipo) || 'Evento'}</span></td>
+                    <td>${hasValue(e.fecha) ? escapeHtml(e.fecha) : '<span class="table-empty">Por definir</span>'}</td>
+                    <td>${hasValue(e.hora) ? escapeHtml(e.hora) : '<span class="table-empty">—</span>'}</td>
+                    <td>${hasValue(e.lugar) ? escapeHtml(e.lugar) : '<span class="table-empty">—</span>'}</td>
+                    <td>${hasValue(e.responsable) ? escapeHtml(e.responsable) : '<span class="table-empty">—</span>'}</td>
+                  </tr>`;
+      }).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+      contentEl.innerHTML = html;
+
+      document.querySelectorAll('.events-table th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          const col = th.dataset.sort;
+          if (sortConfig.column === col) {
+            sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+          } else {
+            sortConfig.column = col;
+            sortConfig.direction = 'asc';
+          }
+          renderTableView(getFilteredEvents());
+        });
+      });
+    }
+
+    function hasValue(v) {
+      return v && String(v).trim() && v !== 'Por definir';
+    }
+
+    // ============ VISTA: LISTA ============
+    function renderListView(events) {
+      const html = `<div class="events-list">
+        ${events.map((e, i) => {
+        const dateInfo = parseDateParts(e.fecha);
+        const s = getEventStatus(e);
+        return `
+          <div class="list-item ${s === 'past' ? 'past' : ''}" style="animation-delay: ${i * 0.04}s">
+            <div class="list-date-badge ${dateInfo.valid ? '' : 'na'} ${s === 'past' ? 'past' : ''}">
+              <span class="day">${dateInfo.day}</span>
+              <span class="month">${dateInfo.month}</span>
+            </div>
+            <div class="list-info">
+              <div class="list-title">
+                ${escapeHtml(e.tipo) || 'Sin título'}
+                ${statusBadge(e)}
+              </div>
+              <div class="list-meta">
+                <span><i class="fa-solid fa-clock"></i> ${hasValue(e.hora) ? escapeHtml(e.hora) : 'Hora por definir'}</span>
+                <span><i class="fa-solid fa-location-dot"></i> ${hasValue(e.lugar) ? escapeHtml(e.lugar) : 'Lugar por definir'}</span>
+                ${hasValue(e.responsable) ? `<span><i class="fa-solid fa-user-tie"></i> ${escapeHtml(e.responsable)}</span>` : ''}
+              </div>
+            </div>
+          </div>`;
+      }).join('')}
+      </div>`;
+      contentEl.innerHTML = html;
+    }
+
+    // ============ VISTA: TIMELINE ============
+    function renderTimelineView(events) {
+      const groups = {};
+      const noDate = [];
+
+      events.forEach(e => {
+        if (hasValue(e.fecha)) {
+          const key = e.fecha.trim();
+          if (!groups[key]) groups[key] = [];
+          groups[key].push(e);
+        } else {
+          noDate.push(e);
+        }
+      });
+
+      // Ordenar grupos por fecha
+      const groupKeys = Object.keys(groups).sort((a, b) => {
+        const da = parseDateToTS(a);
+        const db = parseDateToTS(b);
+        if (currentStatus === 'past') return db - da; // Más recientes primero
+        return da - db;
+      });
+
+      let html = `<div class="timeline">`;
+
+      if (noDate.length > 0) {
+        html += renderTimelineGroup('Por definir', 'Sin fecha asignada', noDate, 'tbd');
+      }
+
+      groupKeys.forEach(key => {
+        const dInfo = parseDateInfo(key);
+        const sampleStatus = getEventStatus(groups[key][0]);
+        const isPast = sampleStatus === 'past';
+        html += renderTimelineGroup(dInfo.full, dInfo.weekday, groups[key], isPast ? 'past' : 'upcoming');
+      });
+
+      html += `</div>`;
+      contentEl.innerHTML = html;
+    }
+
+    function renderTimelineGroup(title, subtitle, items, groupStatus) {
+      const isPast = groupStatus === 'past';
+      return `
+        <div class="timeline-group">
+          <div class="timeline-date-header ${isPast ? 'past' : ''}">
+            <div class="timeline-date-text">
+              ${escapeHtml(title)}
+              ${isPast ? '<span class="status-badge past"><i class="fa-solid fa-check"></i> Realizado</span>' : ''}
+            </div>
+            ${subtitle ? `<div class="timeline-date-sub">${escapeHtml(subtitle)}</div>` : ''}
+          </div>
+          <div class="timeline-items">
+            ${items.map((e, i) => `
+              <div class="timeline-card ${isPast ? 'past' : ''}" style="animation-delay: ${i * 0.05}s">
+                <div class="timeline-card-title">${escapeHtml(e.tipo) || 'Sin título'}</div>
+                <div class="timeline-card-meta">
+                  ${hasValue(e.hora) ? `<span><i class="fa-solid fa-clock"></i> ${escapeHtml(e.hora)}</span>` : ''}
+                  ${hasValue(e.lugar) ? `<span><i class="fa-solid fa-location-dot"></i> ${escapeHtml(e.lugar)}</span>` : ''}
+                  ${hasValue(e.responsable) ? `<span><i class="fa-solid fa-user-tie"></i> ${escapeHtml(e.responsable)}</span>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>`;
+    }
+
+    // ============ UTILIDADES DE FECHA ============
+    function parseToDate(dateStr) {
+      if (!hasValue(dateStr)) return null;
+      try {
+        const str = dateStr.trim();
+        if (/^\d{2}\/\d{2}\/\d{4}/.test(str)) {
+          const [dd, mm, yyyy] = str.split('/');
+          return new Date(`${yyyy}-${mm}-${dd}T12:00:00`);
+        } else if (/^\d{4}-\d{2}-\d{2}/.test(str)) {
+          return new Date(str + 'T12:00:00');
+        }
+        return new Date(str);
+      } catch {
+        return null;
+      }
+    }
+
+    function parseDateParts(dateStr) {
+      const d = parseToDate(dateStr);
+      if (!d || isNaN(d.getTime())) return { valid: false, day: '—', month: 'N/D' };
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      return { valid: true, day: d.getDate(), month: months[d.getMonth()] };
+    }
+
+    function parseDateInfo(dateStr) {
+      const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+      const d = parseToDate(dateStr);
+      if (!d || isNaN(d.getTime())) return { full: dateStr, weekday: '' };
+      const monthsFull = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      return {
+        full: `${d.getDate()} de ${monthsFull[d.getMonth()]} de ${d.getFullYear()}`,
+        weekday: weekdays[d.getDay()]
+      };
+    }
+
+    function parseDateToTS(dateStr) {
+      const d = parseToDate(dateStr);
+      return d ? d.getTime() : 0;
+    }
+
+    // ============ ESTADOS VACÍOS Y ERROR ============
+    function renderEmptyState() {
+      let title = 'Sin resultados';
+      let text = 'No hay eventos que coincidan con tu búsqueda';
+      let icon = 'fa-face-meh';
+
+      if (currentStatus === 'upcoming') {
+        title = 'No hay eventos próximos';
+        text = 'Por ahora no tenemos eventos programados. ¡Vuelve pronto!';
+        icon = 'fa-calendar-xmark';
+      } else if (currentStatus === 'past') {
+        title = 'Sin historial';
+        text = 'Aún no hay eventos realizados registrados';
+        icon = 'fa-clock-rotate-left';
+      }
+
+      contentEl.innerHTML = `
+        <div class="status-container">
+          <i class="fa-solid ${icon} status-icon"></i>
+          <h2 class="status-title">${title}</h2>
+          <p class="status-text">${text}</p>
+        </div>`;
+    }
+
+    function showEmpty() {
+      countEl.textContent = '0 eventos';
+      updateStatusCounts();
+      contentEl.innerHTML = `
+        <div class="status-container">
+          <i class="fa-solid fa-music status-icon"></i>
+          <h2 class="status-title">No hay eventos publicados</h2>
+          <p class="status-text">Pronto compartiremos nuevas presentaciones. ¡Mantente atento!</p>
+        </div>`;
+    }
+
+    function showError(msg) {
+      countEl.textContent = 'Error';
+      contentEl.innerHTML = `
+        <div class="status-container">
+          <i class="fa-solid fa-triangle-exclamation status-icon" style="color:#ff6b6b;"></i>
+          <h2 class="status-title">No pudimos cargar los eventos</h2>
+          <p class="status-text">${escapeHtml(msg)}</p>
+          <button class="retry-btn" onclick="fetchEvents()">
+            <i class="fa-solid fa-rotate"></i> Reintentar
+          </button>
+        </div>`;
+    }
+
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ============ EVENTOS DE INTERFAZ ============
+    searchEl.addEventListener('input', () => {
+      renderCurrentView();
+    });
+
+    viewToggleEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.toggle-btn');
+      if (!btn) return;
+      document.querySelectorAll('#viewToggle .toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentView = btn.dataset.view;
+      localStorage.setItem('sm-view', currentView);
+      renderCurrentView();
+    });
+
+    statusToggleEl.addEventListener('click', (e) => {
+      const btn = e.target.closest('.toggle-btn');
+      if (!btn) return;
+      document.querySelectorAll('#statusToggle .toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentStatus = btn.dataset.status;
+      localStorage.setItem('sm-status', currentStatus);
+      renderCurrentView();
+    });
+
+    // ============ INICIO ============
+    initActiveStates();
+    fetchEvents();
+  </script>
+</body>
+
+</html>
