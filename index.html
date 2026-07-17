@@ -935,7 +935,9 @@
   </footer>
 
   <script>
-    const API_URL = "https://soluciones-musicales-api.solucionesmusicalesorienteant.workers.dev/";
+    const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:')
+      ? "http://localhost:8787"
+      : "https://soluciones-musicales-api.solucionesmusicalesorienteant.workers.dev/";
     let allEvents = [];
     let currentView = localStorage.getItem('sm-view') || 'cards';
     let currentStatus = localStorage.getItem('sm-status') || 'all';

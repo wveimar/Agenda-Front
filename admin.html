@@ -596,7 +596,9 @@
    </div>
 
    <script>
-      const API_URL = "https://soluciones-musicales-api.solucionesmusicalesorienteant.workers.dev";
+      const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:')
+         ? "http://localhost:8787"
+         : "https://soluciones-musicales-api.solucionesmusicalesorienteant.workers.dev";
 
       const loginContainer = document.getElementById('loginContainer');
       const adminContainer = document.getElementById('adminContainer');
@@ -722,8 +724,9 @@
             Error al cargar datos: ${error.message}
           </div>
         `;
+        }
        }
-       
+
        // Renderizar tabla admin
       function renderAdminTable(events) {
          if (events.length === 0) {
