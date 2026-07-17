@@ -236,6 +236,235 @@
          white-space: nowrap;
          /* ← Evita que el texto se parta */
       }
+
+      .pay-btn {
+         background: rgba(245, 185, 66, 0.15);
+         color: var(--accent);
+         border: 1px solid var(--border);
+         padding: 6px 12px;
+         border-radius: 6px;
+         cursor: pointer;
+         font-family: inherit;
+         font-size: 0.85rem;
+         font-weight: 600;
+         display: inline-flex;
+         align-items: center;
+         gap: 6px;
+         transition: all 0.2s;
+      }
+
+      .pay-btn:hover {
+         background: var(--accent);
+         color: var(--bg-primary);
+         transform: scale(1.05);
+      }
+
+      /* Modal glassmorphism styles */
+      .modal {
+         display: none;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(15, 15, 30, 0.8);
+         backdrop-filter: blur(8px);
+         z-index: 1000;
+         align-items: center;
+         justify-content: center;
+         padding: 20px;
+         opacity: 0;
+         transition: opacity 0.3s ease;
+      }
+      
+      .modal.show {
+         display: flex;
+         opacity: 1;
+      }
+
+      .modal-content {
+         background: var(--bg-card);
+         border: 1px solid var(--border);
+         border-radius: 16px;
+         max-width: 800px;
+         width: 100%;
+         max-height: 90vh;
+         overflow-y: auto;
+         padding: 30px;
+         box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+         position: relative;
+         animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes modalSlideUp {
+         from {
+            transform: translateY(40px);
+            opacity: 0;
+         }
+         to {
+            transform: translateY(0);
+            opacity: 1;
+         }
+      }
+
+      .close-modal {
+         position: absolute;
+         top: 20px;
+         right: 20px;
+         background: transparent;
+         border: none;
+         color: var(--text-secondary);
+         font-size: 1.5rem;
+         cursor: pointer;
+         transition: color 0.2s;
+      }
+
+      .close-modal:hover {
+         color: #ff6b6b;
+      }
+
+      .modal-header {
+         margin-bottom: 24px;
+         border-bottom: 1px solid var(--border);
+         padding-bottom: 15px;
+      }
+
+      .modal-header h2 {
+         font-size: 1.6rem;
+         color: var(--text-primary);
+         display: flex;
+         align-items: center;
+         gap: 10px;
+      }
+
+      .modal-header p {
+         color: var(--text-secondary);
+         font-size: 0.9rem;
+         margin-top: 5px;
+      }
+
+      .payments-summary {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+         gap: 15px;
+         margin-bottom: 25px;
+      }
+
+      .summary-card {
+         background: var(--bg-secondary);
+         border: 1px solid var(--border);
+         border-radius: 10px;
+         padding: 15px;
+         text-align: center;
+      }
+
+      .summary-card .label {
+         font-size: 0.75rem;
+         text-transform: uppercase;
+         letter-spacing: 0.8px;
+         color: var(--text-secondary);
+         margin-bottom: 5px;
+      }
+
+      .summary-card .value {
+         font-size: 1.3rem;
+         font-weight: 700;
+      }
+
+      .summary-card.total { color: #f5b942; }
+      .summary-card.paid { color: #4ade80; }
+      .summary-card.pending { color: #ff6b6b; }
+
+      .payments-list-section {
+         margin-bottom: 30px;
+      }
+
+      .payments-list-section h3 {
+         font-size: 1.1rem;
+         margin-bottom: 12px;
+         color: var(--accent);
+         display: flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      .pago-table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-top: 10px;
+      }
+
+      .pago-table th {
+         background: rgba(245, 185, 66, 0.05);
+         font-size: 0.8rem;
+         padding: 10px;
+      }
+
+      .pago-table td {
+         padding: 10px;
+         border-top: 1px solid rgba(245, 185, 66, 0.1);
+         font-size: 0.9rem;
+      }
+
+      .pago-badge {
+         display: inline-block;
+         padding: 2px 8px;
+         border-radius: 4px;
+         font-size: 0.75rem;
+         font-weight: 600;
+         text-transform: uppercase;
+      }
+
+      .pago-badge.ingreso {
+         background: rgba(74, 222, 128, 0.15);
+         color: #4ade80;
+      }
+
+      .pago-badge.egreso {
+         background: rgba(255, 107, 107, 0.15);
+         color: #ff6b6b;
+      }
+
+      .new-payment-section {
+         border-top: 1px solid var(--border);
+         padding-top: 25px;
+      }
+
+      .new-payment-section h3 {
+         font-size: 1.1rem;
+         margin-bottom: 15px;
+         color: var(--accent);
+         display: flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      .payment-form-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+         gap: 15px;
+         margin-bottom: 15px;
+      }
+
+      .btn-submit-payment {
+         background: linear-gradient(135deg, #f5b942 0%, #ff6b6b 100%);
+         color: var(--bg-primary);
+         border: none;
+         padding: 12px 24px;
+         font-family: inherit;
+         font-weight: 600;
+         border-radius: 8px;
+         cursor: pointer;
+         transition: all 0.2s;
+         display: inline-flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      .btn-submit-payment:hover {
+         transform: translateY(-2px);
+         box-shadow: 0 4px 15px rgba(245, 185, 66, 0.3);
+      }
    </style>
 </head>
 
@@ -280,6 +509,88 @@
       <div id="eventsContainer">
          <div class="loading">
             <i class="fa-solid fa-spinner fa-spin"></i> Cargando datos...
+         </div>
+      </div>
+   </div>
+
+   <!-- MODAL DETALLE PAGOS -->
+   <div class="modal" id="paymentsModal">
+      <div class="modal-content">
+         <button class="close-modal" id="closeModalBtn" onclick="closePaymentsModal()">
+            <i class="fa-solid fa-xmark"></i>
+         </button>
+         
+         <div class="modal-header">
+            <h2><i class="fa-solid fa-wallet"></i> Detalle de Pagos</h2>
+            <p id="modalSubtitle">Evento #1.0 - Mariachi (17/07/2026)</p>
+         </div>
+
+         <div class="payments-summary">
+            <div class="summary-card total">
+               <div class="label">Ingreso Total</div>
+               <div class="value" id="summaryTotal">$0</div>
+            </div>
+            <div class="summary-card paid">
+               <div class="label">Abonado / Pagado</div>
+               <div class="value" id="summaryPaid">$0</div>
+            </div>
+            <div class="summary-card pending">
+               <div class="label">Saldo Restante</div>
+               <div class="value" id="summaryPending">$0</div>
+            </div>
+         </div>
+
+         <div class="payments-list-section">
+            <h3><i class="fa-solid fa-list-check"></i> Historial de Movimientos</h3>
+            <div id="paymentsListContainer" style="overflow-x: auto;">
+               <div class="loading" style="padding: 20px 0;">
+                  <i class="fa-solid fa-spinner fa-spin"></i> Cargando historial...
+               </div>
+            </div>
+         </div>
+
+         <div class="new-payment-section">
+            <h3><i class="fa-solid fa-plus"></i> Registrar Nuevo Pago</h3>
+            <form id="newPaymentForm">
+               <input type="hidden" id="formIdEvento">
+               <div class="payment-form-grid">
+                  <div class="form-group">
+                     <label for="pagoFecha">Fecha</label>
+                     <input type="date" id="pagoFecha" required>
+                  </div>
+                  <div class="form-group">
+                     <label for="pagoConcepto">Concepto</label>
+                     <input type="text" id="pagoConcepto" placeholder="abono, comision, etc." required>
+                  </div>
+                  <div class="form-group">
+                     <label for="pagoMonto">Monto ($)</label>
+                     <input type="number" id="pagoMonto" placeholder="50000" min="0" required>
+                  </div>
+               </div>
+               <div class="payment-form-grid">
+                  <div class="form-group">
+                     <label for="pagoTipo">Tipo de Movimiento</label>
+                     <select id="pagoTipo" required style="width:100%; padding:12px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:10px; color:var(--text-primary); font-family:inherit;">
+                        <option value="ingreso">Ingreso</option>
+                        <option value="egreso">Egreso</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="pagoCaja">Caja Destino/Origen</label>
+                     <select id="pagoCaja" required style="width:100%; padding:12px; background:var(--bg-secondary); border:1px solid var(--border); border-radius:10px; color:var(--text-primary); font-family:inherit;">
+                        <option value="wveimar">Wveimar</option>
+                        <option value="sebas">Sebas</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="pagoDetalle">Detalle / Notas</label>
+                     <input type="text" id="pagoDetalle" placeholder="Transferencia Bancolombia, etc.">
+                  </div>
+               </div>
+               <button type="submit" class="btn-submit-payment" id="submitPaymentBtn">
+                  <i class="fa-solid fa-floppy-disk"></i> Guardar Pago
+               </button>
+            </form>
          </div>
       </div>
    </div>
@@ -401,10 +712,7 @@
             Error al cargar datos: ${error.message}
           </div>
         `;
-         }
-      }
-
-      // Renderizar tabla admin
+         }      // Renderizar tabla admin
       function renderAdminTable(events) {
          if (events.length === 0) {
             eventsContainer.innerHTML = `
@@ -420,7 +728,7 @@
 
          const html = `
     <div class="events-table" style="overflow-x: auto;">
-      <table style="min-width: 1800px;">
+      <table style="min-width: 1900px;">
         <thead>
           <tr>
             <th>Tipo</th>
@@ -439,6 +747,7 @@
             <th>Utilero</th>
             <th>Intermediario</th>
             <th>Abono</th>
+            <th>Pagos</th>
             <th>Extras</th>
             <th>Gastos Evento</th>
             <th>Utilidades</th>
@@ -465,6 +774,11 @@
               <td>${fmt(e.utilero)}</td>
               <td>${fmt(e.intermediario)}</td>
               <td>${fmt(e.abono)}</td>
+              <td>
+                <button class="pay-btn" onclick="openPaymentsModal('${escapeHtml(e.customId)}', '${escapeHtml(e.tipo)}', '${escapeHtml(e.fecha)}', ${e.ingreso || 0})">
+                  <i class="fa-solid fa-money-bill-transfer"></i> Ver (${e.customId || '—'})
+                </button>
+              </td>
               <td>${fmt(e.extras)}</td>
               <td style="color: #ff6b6b;">${fmt(e.gastosEvento)}</td>
               <td style="color: #f5b942; font-weight: 700;">${fmt(e.utilidades)}</td>
@@ -481,13 +795,191 @@
       }
 
       function escapeHtml(str) {
-         if (!str) return '';
+         if (str == null) return '';
          return String(str)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;');
       }
+
+      // ============ LÓGICA DE DETALLE DE PAGOS ============
+      async function openPaymentsModal(idEvento, tipo, fecha, ingresoTotal) {
+         const modal = document.getElementById('paymentsModal');
+         const subtitle = document.getElementById('modalSubtitle');
+         const formIdEvento = document.getElementById('formIdEvento');
+         
+         // Limpiar formulario y colocar valores por defecto
+         document.getElementById('newPaymentForm').reset();
+         document.getElementById('pagoFecha').value = new Date().toISOString().split('T')[0];
+         formIdEvento.value = idEvento;
+         
+         subtitle.textContent = `Evento #${idEvento} - ${tipo} (${fecha})`;
+         
+         // Mostrar modal
+         modal.classList.add('show');
+         
+         // Cargar movimientos
+         await loadPaymentDetails(idEvento, ingresoTotal);
+      }
+
+      function closePaymentsModal() {
+         const modal = document.getElementById('paymentsModal');
+         modal.classList.remove('show');
+      }
+
+      async function loadPaymentDetails(idEvento, ingresoTotal) {
+         const listContainer = document.getElementById('paymentsListContainer');
+         const token = localStorage.getItem('admin_token');
+         
+         listContainer.innerHTML = `
+            <div class="loading" style="padding: 20px 0;">
+               <i class="fa-solid fa-spinner fa-spin"></i> Cargando historial...
+            </div>
+         `;
+         
+         try {
+            const response = await fetch(`${API_URL}/api/admin/detallepagos?id_evento=${idEvento}`, {
+               headers: {
+                  'Authorization': `Bearer ${token}`
+               }
+            });
+            
+            if (!response.ok) {
+               throw new Error('Error al consultar detalles de pago');
+            }
+            
+            const pagos = await response.json();
+            
+            // Calcular total abonado
+            let totalAbonado = 0;
+            pagos.forEach(p => {
+               if (p.tipo === 'ingreso' && p.concepto.toLowerCase().includes('abono')) {
+                  totalAbonado += Number(p.monto || 0);
+               }
+            });
+            
+            const totalPending = Number(ingresoTotal || 0) - totalAbonado;
+            
+            const fmt = (n) => '$' + Number(n).toLocaleString('es-CO');
+            
+            // Actualizar resúmenes
+            document.getElementById('summaryTotal').textContent = fmt(ingresoTotal || 0);
+            document.getElementById('summaryPaid').textContent = fmt(totalAbonado);
+            document.getElementById('summaryPending').textContent = fmt(totalPending);
+            
+            if (pagos.length === 0) {
+               listContainer.innerHTML = `
+                  <div class="loading" style="padding: 20px 0; font-style: italic;">
+                     <i class="fa-solid fa-folder-open"></i> No hay movimientos registrados para este evento.
+                  </div>
+               `;
+               return;
+            }
+            
+            // Renderizar tabla de movimientos del evento
+            const html = `
+               <table class="pago-table" style="min-width: 600px; width: 100%;">
+                  <thead>
+                     <tr>
+                        <th>Fecha</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Tipo</th>
+                        <th>Caja</th>
+                        <th>Saldo</th>
+                        <th>Detalle</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     ${pagos.map(p => `
+                        <tr>
+                           <td>${escapeHtml(p.fecha)}</td>
+                           <td><strong>${escapeHtml(p.concepto)}</strong></td>
+                           <td style="font-weight: 600; color: ${p.tipo === 'ingreso' ? '#4ade80' : '#ff6b6b'}">
+                              ${p.tipo === 'ingreso' ? '+' : '-'}${fmt(p.monto)}
+                           </td>
+                           <td>
+                              <span class="pago-badge ${p.tipo === 'ingreso' ? 'ingreso' : 'egreso'}">
+                                 ${escapeHtml(p.tipo)}
+                              </span>
+                           </td>
+                           <td>${escapeHtml(p.caja)}</td>
+                           <td>${fmt(p.saldo)}</td>
+                           <td style="color: var(--text-secondary); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(p.detalle)}">
+                              ${escapeHtml(p.detalle) || '—'}
+                           </td>
+                        </tr>
+                     `).join('')}
+                  </tbody>
+               </table>
+            `;
+            listContainer.innerHTML = html;
+         } catch (error) {
+            listContainer.innerHTML = `
+               <div class="loading" style="color: #ff6b6b; padding: 20px 0;">
+                  <i class="fa-solid fa-triangle-exclamation"></i> Error: ${error.message}
+               </div>
+            `;
+         }
+      }
+
+      // Guardar nuevo pago
+      document.getElementById('newPaymentForm').addEventListener('submit', async (e) => {
+         e.preventDefault();
+         
+         const submitBtn = document.getElementById('submitPaymentBtn');
+         const token = localStorage.getItem('admin_token');
+         const idEvento = document.getElementById('formIdEvento').value;
+         
+         const payload = {
+            idEvento: idEvento,
+            fecha: document.getElementById('pagoFecha').value,
+            concepto: document.getElementById('pagoConcepto').value,
+            monto: Number(document.getElementById('pagoMonto').value),
+            tipo: document.getElementById('pagoTipo').value,
+            caja: document.getElementById('pagoCaja').value,
+            detalle: document.getElementById('pagoDetalle').value
+         };
+         
+         submitBtn.disabled = true;
+         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Guardando...';
+         
+         try {
+            const response = await fetch(`${API_URL}/api/admin/detallepagos`, {
+               method: 'POST',
+               headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+               },
+               body: JSON.stringify(payload)
+            });
+            
+            if (!response.ok) {
+               const error = await response.json();
+               throw new Error(error.error || 'Error al guardar el pago');
+            }
+            
+            // Recargar listado en el modal
+            const ingresoText = document.getElementById('summaryTotal').textContent;
+            const ingresoTotal = Number(ingresoText.replace(/[^0-9]/g, ''));
+            await loadPaymentDetails(idEvento, ingresoTotal);
+            
+            // Limpiar campos formulario
+            document.getElementById('pagoConcepto').value = '';
+            document.getElementById('pagoMonto').value = '';
+            document.getElementById('pagoDetalle').value = '';
+            
+            // Actualizar tabla principal en segundo plano
+            loadAdminData();
+            
+         } catch (error) {
+            alert(`Error: ${error.message}`);
+         } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Guardar Pago';
+         }
+      });
    </script>
 </body>
 
