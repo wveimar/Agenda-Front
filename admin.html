@@ -662,10 +662,20 @@
          loginContainer.style.display = 'block';
          adminContainer.classList.remove('show');
          document.getElementById('username').value = '';
-         document.getElementById('password').value = '';
-      });
+          document.getElementById('password').value = '';
+       });
 
-      // Mostrar panel admin
+       eventsContainer.addEventListener('click', (e) => {
+          const btn = e.target.closest('.pay-btn');
+          if (!btn) return;
+          const id = btn.dataset.id;
+          const tipo = btn.dataset.tipo;
+          const fecha = btn.dataset.fecha;
+          const ingreso = Number(btn.dataset.ingreso) || 0;
+          openPaymentsModal(id, tipo, fecha, ingreso);
+       });
+
+       // Mostrar panel admin
       async function showAdminPanel() {
          loginContainer.style.display = 'none';
          adminContainer.classList.add('show');
@@ -712,7 +722,9 @@
             Error al cargar datos: ${error.message}
           </div>
         `;
-         }      // Renderizar tabla admin
+       }
+       
+       // Renderizar tabla admin
       function renderAdminTable(events) {
          if (events.length === 0) {
             eventsContainer.innerHTML = `
@@ -775,7 +787,7 @@
               <td>${fmt(e.intermediario)}</td>
               <td>${fmt(e.abono)}</td>
               <td>
-                <button class="pay-btn" onclick="openPaymentsModal('${escapeHtml(e.customId)}', '${escapeHtml(e.tipo)}', '${escapeHtml(e.fecha)}', ${e.ingreso || 0})">
+                 <button class="pay-btn" data-id="${escapeHtml(e.customId)}" data-tipo="${escapeHtml(e.tipo)}" data-fecha="${escapeHtml(e.fecha)}" data-ingreso="${e.ingreso || 0}">
                   <i class="fa-solid fa-money-bill-transfer"></i> Ver (${e.customId || '—'})
                 </button>
               </td>
@@ -799,9 +811,10 @@
          return String(str)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
-      }
+             .replace(/>/g, '&gt;')
+             .replace(/"/g, '&quot;')
+             .replace(/'/g, '&#39;');
+       }
 
       // ============ LÓGICA DE DETALLE DE PAGOS ============
       async function openPaymentsModal(idEvento, tipo, fecha, ingresoTotal) {
@@ -854,7 +867,7 @@
             // Calcular total abonado
             let totalAbonado = 0;
             pagos.forEach(p => {
-               if (p.tipo === 'ingreso' && p.concepto.toLowerCase().includes('abono')) {
+                if (p.tipo === 'ingreso' && (p.concepto || '').toLowerCase().includes('abono')) {
                   totalAbonado += Number(p.monto || 0);
                }
             });
